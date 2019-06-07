@@ -1,30 +1,34 @@
 #include <stdio.h>
 #include <dirent.h>
-#include <string.h>
-#include <sys/stat.h>
+#include <sys/stat.h> //st_size to find file size
 
 /**
  * Main
  */
 int main(int argc, char **argv)
 {
-  DIR *dir;
-  struct dirent *d;
-
-  // Parse command line
+  //parse command line taken from examples exercise
   int i;
+  for (i = 0; i < argc; i++)
+  {
+    printf("   %s\n", argv[i]);
+  }
 
-    printf("There are %d command line argument(s):\n", argc);
+// Open directory and find file size!
+  struct stat buf;
+  if (argc > 1)
+  {
+    stat(argv[1], &buf);
+  }
+  else
+  {
+    stat(".", &buf);
+  }
+  printf("file size is %lld\n", buf.st_size);
 
-    for (i = 0; i < argc; i++) {
-        printf("   %s\n", argv[i]);
-    }
-
-    return 0;
-  // Open directory
-  dir = opendir();
-  // Repeatly read and print entries
+  DIR *d;
+  struct dirent *dir;
+  
   // Close directory
-  closedir();
-  return 0;
+  return (0);
 }
