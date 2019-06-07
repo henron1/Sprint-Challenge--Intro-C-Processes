@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <dirent.h>
+#include <dirent.h> //readdir
 #include <sys/stat.h> //st_size to find file size
 
 /**
@@ -24,11 +24,18 @@ int main(int argc, char **argv)
   {
     stat(".", &buf);
   }
-  printf("file size is %lld\n", buf.st_size);
+  printf("file size = %i\n", buf.st_size);
 
   DIR *d;
   struct dirent *dir;
-  
+  // Repeat read and print entries
+  d = (argc > 1) ? opendir(argv[1]) : opendir(".");
+  if (d) // if director is present
+  {
+    while ((dir = readdir(d)) != NULL) // basically returning a pointer to a struct at current position at dir
+    {
+      printf("%s\n", dir->d_name); //printing directory name
+    }
   // Close directory
   return (0);
 }
